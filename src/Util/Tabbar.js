@@ -30,14 +30,9 @@ export default class TabBarItem extends Component {
 }
  
 var styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        flexWrap: 'wrap',
-        flex: 1
-      
-    },
     tabNav:{
         flex:1,
+        height: 45,
         backgroundColor:"#fff"
     },
     item: {

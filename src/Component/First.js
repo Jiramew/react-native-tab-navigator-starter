@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     StyleSheet,
     Text,
     View,
 } from 'react-native';
 
-export default class First extends Component {
+export default class First extends React.Component {
     constructor(props) {
         super(props);
         this.state = {}

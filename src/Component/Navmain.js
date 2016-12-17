@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     StyleSheet,
     Text,
@@ -11,38 +11,25 @@ import Second from "./Second.js";
 import Third from "./Third.js";
 import TabBarItem from "../Util/Tabbar.js";
 
-var pages = [
-    <First />,
-    <Second />,
-    <Third />,
-]
+var pages = [First, Second, Third]
 
-export default class Navmain extends Component {
-    constructor(props, params) {
+export default class Navmain extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = {
-            tabIndex: 0
-        }
-    }
-
-    render = () => {
-        return (
-            <Navigator
-                initialRoute={{index:this.state.tabIndex}}
-                renderScene={this.renderScene}
-                configureScene={(route) => {
-                    return Navigator.SceneConfigs.FloatFromBottom;
-                }}
-                navigationBar={this.TabBar()}
-            />
-        );
     }
 
     renderScene = (route, navigator) => {
-       console.log('state:',this.state)
-       return (
-           pages[this.state.tabIndex]
-       )
+        console.log('on render scene', navigator.getCurrentRoutes());
+        all_routes = navigator.getCurrentRoutes();
+        let ComponentRender = pages[route.index];
+        return <ComponentRender {...route.params} />
+    }
+
+    navigate = (tab) => {
+        console.log(this._navigator.getCurrentRoutes());
+        if(this._navigator) {
+            this._navigator.push({index: tab});
+        }
     }
 
     TabBar = () => {
@@ -51,27 +38,37 @@ export default class Navmain extends Component {
                 <TabBarItem
                     underlayColor="#B5B5B5"
                     image={require("../Image/image.png") }
-                    title="第一"
-                    onPress={() => {
-                        this.setState({tabIndex:0})
-                    }}></TabBarItem>
+                    title="First"
+                    onPress={() => this.navigate(0)}></TabBarItem>
                 <TabBarItem
                     underlayColor="#B5B5B5"
                     image={require("../Image/image.png") }
-                    title="第二"
-                    onPress={() => {
-                        this.setState({tabIndex:1})
-                    }}></TabBarItem>
+                    title="Second"
+                    onPress={() => this.navigate(1)}></TabBarItem>
                  <TabBarItem
                     underlayColor="#B5B5B5"
                     image={require("../Image/image.png") }
-                    title="第三"
-                    onPress={() => {
-                        this.setState({tabIndex:2})
-                    }}></TabBarItem>
+                    title="Third"
+                    onPress={() => this.navigate(2)}></TabBarItem>
             </View>
         )
     }
+
+    render = () => {
+        return (
+            <Navigator
+                initialRoute={{index:0}}
+                renderScene={this.renderScene}
+                configureScene={(route) => {
+                    return Navigator.SceneConfigs.FloatFromBottom;
+                }}
+                navigationBar={this.TabBar()}
+                ref={(navigator) => {this._navigator = navigator}}
+            />
+        );
+    }
+
+    
 }
 
 const styles = StyleSheet.create({

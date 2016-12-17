@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {
     StyleSheet,
     Text,
@@ -10,7 +10,7 @@ export default class Third extends React.Component {
         super(props);
         this.state = {}
     }
-    render() {
+    render = () => {
         return (
             <View style={{alignSelf:'center', marginTop:50}}>
                 <Text style={{fontSize:36}}>Third</Text>
