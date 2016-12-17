@@ -16,11 +16,10 @@ var pages = [First, Second, Third]
 export default class Navmain extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {selected:0}
     }
 
     renderScene = (route, navigator) => {
-        console.log('on render scene', navigator.getCurrentRoutes());
-        all_routes = navigator.getCurrentRoutes();
         let ComponentRender = pages[route.index];
         return <ComponentRender {...route.params} />
     }
@@ -29,6 +28,7 @@ export default class Navmain extends React.Component {
         console.log(this._navigator.getCurrentRoutes());
         if(this._navigator) {
             this._navigator.push({index: tab});
+            this.setState({selected:tab});
         }
     }
 
@@ -37,17 +37,17 @@ export default class Navmain extends React.Component {
             <View style={styles.tabs}>
                 <TabBarItem
                     underlayColor="#B5B5B5"
-                    image={require("../Image/image.png") }
+                    image={(this.state.selected == 0) ? require("../Image/star.png") : require("../Image/star_sel.png")}
                     title="First"
                     onPress={() => this.navigate(0)}></TabBarItem>
                 <TabBarItem
                     underlayColor="#B5B5B5"
-                    image={require("../Image/image.png") }
+                    image={(this.state.selected == 1) ? require("../Image/star.png") : require("../Image/star_sel.png")}
                     title="Second"
                     onPress={() => this.navigate(1)}></TabBarItem>
                  <TabBarItem
                     underlayColor="#B5B5B5"
-                    image={require("../Image/image.png") }
+                    image={(this.state.selected == 2) ? require("../Image/star.png") : require("../Image/star_sel.png")}
                     title="Third"
                     onPress={() => this.navigate(2)}></TabBarItem>
             </View>
@@ -60,7 +60,8 @@ export default class Navmain extends React.Component {
                 initialRoute={{index:0}}
                 renderScene={this.renderScene}
                 configureScene={(route) => {
-                    return Navigator.SceneConfigs.FloatFromBottom;
+                    console.log('config Scene:', route);
+                    return (route.index > this.state.selected) ? Navigator.SceneConfigs.FloatFromRight : Navigator.SceneConfigs.FloatFromLeft;
                 }}
                 navigationBar={this.TabBar()}
                 ref={(navigator) => {this._navigator = navigator}}
