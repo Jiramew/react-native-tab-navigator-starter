@@ -1,4 +1,4 @@
-# react_tab_starter
+# react native tab starter
 
 ## Overview
 This project is a React Native Navigator Starter program. It's really easy to understand. I am a newbie to React Native, hope to get some instruction. Thanks ~ 
